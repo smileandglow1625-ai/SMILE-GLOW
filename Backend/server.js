@@ -29,8 +29,7 @@ app.use(
   })
 );
 
-// Preflight fix
-app.options("*", cors());
+
 
 
 // ⭐ MUST HAVE — FIXES PRE-FLIGHT (OPTIONS) ERROR
