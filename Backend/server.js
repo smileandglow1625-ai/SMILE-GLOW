@@ -17,7 +17,7 @@ const app = express();
 /* ======================================================
    ⭐ ABSOLUTE WORKING CORS FIX (Render + Local + Browser)
 ====================================================== */
-const cors = require("cors");
+
 
 app.use(
   cors({
