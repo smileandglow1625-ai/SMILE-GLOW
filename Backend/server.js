@@ -32,7 +32,7 @@ app.use(
   })
 );
 
-app.options("*", cors());
+// app.options("*", cors());
 
 app.use((req, res, next) => {
   res.header(
