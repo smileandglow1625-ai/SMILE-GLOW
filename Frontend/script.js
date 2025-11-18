@@ -118,7 +118,7 @@ if (appointmentForm) {
 
     try {
       const res = await fetch(
-        "https://smile-glow.onrender.com/api/appointments",
+        "https://smile-glow-2.onrender.com/api/appointments",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
