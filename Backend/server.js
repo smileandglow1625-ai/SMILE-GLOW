@@ -17,17 +17,19 @@ const app = express();
 /* ======================================================
    ⭐ ABSOLUTE WORKING CORS FIX (Render + Local + Browser)
 ====================================================== */
+const cors = require("cors");
+
 app.use(
   cors({
     origin: [
       "https://smileandglowaesthetic.com",
-      "https://www.smileandglowaesthetic.com",
-      "http://127.0.0.1:5500"   // for local testing
+      "http://localhost:5500"
     ],
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type"],
   })
 );
+
 
 
 
