@@ -19,11 +19,19 @@ const app = express();
 ====================================================== */
 app.use(
   cors({
-    origin: "*",
+    origin: [
+      "https://smileandglowaesthetic.com",
+      "https://www.smileandglowaesthetic.com",
+      "http://127.0.0.1:5500"   // for local testing
+    ],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
+
+// Preflight fix
+app.options("*", cors());
+
 
 // ⭐ MUST HAVE — FIXES PRE-FLIGHT (OPTIONS) ERROR
 // app.options("*", cors());
