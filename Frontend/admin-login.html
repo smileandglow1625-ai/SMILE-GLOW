@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Admin Login — Smile & Glow</title>
+    <style>
+      :root {
+        --gold: #c9a23a;
+        --bg: #0b0b0b;
+        --card: #121212;
+        --muted: #bfbfbf;
+      }
+      body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--bg);
+        font-family: Arial, Helvetica, sans-serif;
+        color: var(--muted);
+      }
+      .card {
+        width: 360px;
+        background: linear-gradient(180deg, #111, #0f0f0f);
+        padding: 28px;
+        border-radius: 12px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+        border: 1px solid rgba(201, 162, 58, 0.07);
+      }
+      h1 {
+        color: var(--gold);
+        margin: 0 0 10px;
+        font-size: 20px;
+        text-align: center;
+      }
+      label {
+        display: block;
+        font-size: 13px;
+        margin-top: 12px;
+        color: #ddd;
+      }
+      input {
+        width: 100%;
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid #222;
+        background: #0b0b0b;
+        color: #fff;
+        margin-top: 6px;
+        box-sizing: border-box;
+      }
+      button {
+        margin-top: 16px;
+        width: 100%;
+        padding: 10px;
+        border-radius: 8px;
+        border: none;
+        background: var(--gold);
+        color: #081010;
+        font-weight: 700;
+        cursor: pointer;
+      }
+      .small {
+        font-size: 13px;
+        color: #999;
+        margin-top: 8px;
+        text-align: center;
+      }
+      .link {
+        color: var(--gold);
+        cursor: pointer;
+      }
+      .error {
+        color: #ff6b6b;
+        font-size: 13px;
+        margin-top: 8px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h1>Smile & Glow — Admin Login</h1>
+
+      <label for="email">Email</label>
+      <input id="email" type="email" placeholder="admin@smile.com" />
+
+      <label for="password">Password</label>
+      <input id="password" type="password" placeholder="••••••••" />
+
+      <button id="loginBtn">Login</button>
+      <!-- <div class="small">
+        Forgot password? <span class="link" id="forgotLink">Reset via OTP</span>
+      </div> -->
+      <p id="msg" class="error"></p>
+    </div>
+
+    <script>
+      const API_BASE = "https://smile-glow.onrender.com"; // set your backend URL
+
+      document
+        .getElementById("loginBtn")
+        .addEventListener("click", async () => {
+          const email = document.getElementById("email").value.trim();
+          const password = document.getElementById("password").value.trim();
+          const msg = document.getElementById("msg");
+          msg.textContent = "";
+
+          try {
+            const res = await fetch(`${API_BASE}/api/admin/login`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ email, password }),
+            });
+            const data = await res.json();
+            if (!data.success) {
+              msg.textContent = data.message || "Invalid credentials";
+              return;
+            }
+            localStorage.setItem("token", data.token);
+            localStorage.setItem("adminEmail", email);
+            window.location.href = "admin.html";
+          } catch (err) {
+            msg.textContent = "Network error";
+            console.error(err);
+          }
+        });
+
+      // document.getElementById("forgotLink").addEventListener("click", () => {
+      //   window.location.href = "forgot-password.html";
+      // });
+    </script>
+  </body>
+</html>

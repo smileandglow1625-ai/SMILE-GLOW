@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SMILE & GLOW</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="navbar">
+      <div class="logo-section">
+        <img
+          src="Logo.png"
+          alt="Dental Logo"
+          class="logo"/>
+        <p class="tagline">SMILE & GLOW</p>
+      </div>
+
+      <nav class="nav-links" id="nav-links">
+        <a href="index.html">Home</a>
+        <a href="index.html#about-section-screen">About Us</a>
+        <a href="index.html#services-section-screen">Our Services</a>
+        <a href="index.html#gallery-section-screen">Our Gallery</a>
+        <a href="appointment.html" class="book-btn">Book Appointment</a>
+      </nav>
+
+      <div class="menu-toggle" id="menu-toggle">&#9776;</div>
+    </header>
+
+
+    <!-- appointment form -->
+
+  <section class="appointment-page">
+    <div class="form-container">
+      <h2>Appointment Form</h2>
+
+      <!-- Patient Information -->
+      <div class="form-section">
+        <h3>Patient Information</h3>
+        <form id="appointmentForm">
+          <div class="form-row">
+            <label>Name</label>
+            <input type="text" name="name" required>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Date Of Birth</label>
+              <input type="date" name="dob" required>
+            </div>
+            <div class="form-group gender">
+              <label>Gender</label>
+              <div class="radio-group">
+                <label><input type="radio" name="gender" value="Male"> Male</label>
+                <label><input type="radio" name="gender" value="Female"> Female</label>
+                <label><input type="radio" name="gender" value="Other"> Other</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Phone Number</label>
+              <input type="tel" name="phone" required>
+            </div>
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email" name="email" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <label>Address</label>
+            <input type="text" rows="3" name="address" required>
+          </div>
+
+          <!-- Appointment Details -->
+          <h3>Appointment Details</h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Preferred Date</label>
+              <input type="date" name="preferred_date" required>
+            </div>
+            <div class="form-group">
+              <label>Alternate Date</label>
+              <input type="date" name="alternate_date">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Preferred Time</label>
+              <input type="time" name="preferred_time">
+            </div>
+            <div class="form-group">
+              <label>Alternate Time</label>
+              <input type="time" name="alternate_time">
+            </div>
+          </div>
+
+          <!-- Type of Appointment -->
+          <h3>Doctor's Appointment</h3>
+          <div class="radio-section">
+            <label><input type="radio" name="appointment_type" value="Dr. Jyoti Yadav "> Dr. Jyoti Yadav (Dental Surgeon/Aesthetic Physician)</label>
+            <label><input type="radio" name="appointment_type" value="Dr. Shailendra Yadav"> Dr. Shailendra Yadav (Dental Surgeon)</label>
+          </div>
+
+          <!-- Reason for Appointment -->
+          <h3>Reason for Appointment</h3>
+          <div class="radio-section">
+            <label><input type="radio" name="reason" value="Aesthetics"> Aesthetics</label>
+            <label><input type="radio" name="reason" value="Dental"> Dental</label>
+            <label><input type="radio" name="reason" value="Orthodontist"> Orthodontist</label>
+            <label><input type="radio" name="reason" value="Endodontist"> Endodontist</label>
+            <label><input type="radio" name="reason" value="Pedodontist"> Pedodontist</label>
+            <label><input type="radio" name="reason" value="Oral Maxillo facial surgeon/ Implantologist"> Oral Maxillo facial surgeon/ Implantologist</label>
+          </div>
+
+          <div class="form-row center">
+            <button type="submit">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Map Section -->
+    <div class="map-section">
+       <h3>📍 Visit Our Clinic</h3>
+       <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14227.618113728143!2d80.94941639089802!3d26.86860582931282!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399be36a0d39a94b%3A0xc88802a09e9393b7!2sSmile%20%26%20Glow%20-%20Best%20Dental%20%26%20Aesthetic%20Clinic%20in%20Vijayant%20Khand%2C%20Lucknow!5e0!3m2!1sen!2sin!4v1731412653811!5m2!1sen!2sin"
+          width="100%"
+          height="400"
+          style="border:0;"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade">
+       </iframe>
+    </div>
+  </section>
+
+
+
+   <!-- ========== FOOTER SECTION ========== -->
+    <footer class="footer">
+      <div class="footer-container">
+        <!-- Column 1: Logo & About -->
+        <div class="footer-col">
+          <img
+            src="Logo.png"
+            alt="Dental Logo"
+            class="footer-logo"
+          />
+          <p>   
+             At Smile & Glow we believe that confidence begins with a healthy smile and radiant skin.
+             Our expert doctors provide advanced Dental Care & Facial Aesthetic services — all under one roof.
+          </p>
+        </div>
+
+        <!-- Column 2: Quick Links -->
+        <div class="footer-col">
+          <h3>Quick Link</h3>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#about-section-screen">About Us</a></li>
+            <li><a href="index.html#services-section-screen">Our Services</a></li>
+            <li><a href="index.html#gallery-section-screen">Our Gallery</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 3: Dental Services -->
+        <div class="footer-col">
+          <h3>Aesthetic & Dental Services</h3>
+          <ul>
+            <li><a href="#">Consultation With Doctors</a></li>
+            <li><a href="#">Hydra Facial/Chemical Peels</a></li>
+            <li><a href="#">Face PRP/Hair Regrowth Treatment</a></li>
+            <li><a href="#">Botox/Laser Hair Reduction</a></li>
+            <li><a href="#">Scaling/Extraction/RCT</a></li>
+            <li><a href="#">Dental Implant/Pediatric Dentistry</a></li>
+            <li><a href="#">Braces & Aligners</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 4: Contact Info -->
+        <div class="footer-col contact-col">
+          <h3>Contact Info</h3>
+          <p><i class="fa-solid fa-phone"></i> +91 9450227874, +91 7844022484</p>
+          <p><i class="fa-solid fa-envelope"></i> smileanglow1625@gmail.com</p>
+          <p>
+            <i class="fa-solid fa-location-dot"></i> C-3/40, opposite Greenland Public school, Vijayant Khand,
+             Gomti Nagar, Lucknow, Uttar Pradesh (226010)
+          </p>
+
+          <!-- ✅ Social Icons -->
+           <a href="https://www.facebook.com/share/1EfvY1d8Bt/" target="_blank">
+             <img src="icons8-facebook-48.png" alt="Facebook" />
+          </a>
+
+           <a href="https://www.instagram.com/smileandglow_1625?igsh=d3JoMzd1bndkd3du" target="_blank">
+                <img src="icons8-instagram-48.png" alt="Instagram" />
+           </a>
+
+           <a href="https://wa.me/919450227874" target="_blank">
+               <img src="icons8-whatsapp-48.png" alt="WhatsApp" />
+           </a>
+        </div>
+      </div>
+
+      <!-- Bottom Copyright -->
+      <div class="footer-bottom">
+        <p>
+          Copyright © 2025 SMILE & GLOW | Design & Developed by
+          <span>ARIKAB2B TEAM</span>
+        </p>
+      </div>
+
+      <!-- 🔝 Scroll-to-Top Button -->
+        <button id="scrollTopBtn" title="Go to top">
+          <img src="arrow.png" alt="Scroll to top" />
+        </button>
+    </footer>
+
+
+  <script src="script.js"></script>
+</body>
+</html>

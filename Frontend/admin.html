@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Admin Panel — Smile & Glow</title>
+    <style>
+      :root {
+        --gold: #c9a23a;
+        --bg: #070707;
+        --card: #0f0f0f;
+        --muted: #cfcfcf;
+      }
+      body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        background: var(--bg);
+        color: var(--muted);
+        padding: 18px;
+      }
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 18px;
+      }
+      h1 {
+        color: var(--gold);
+        margin: 0;
+        font-size: 20px;
+      }
+      .controls {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+      input,
+      select {
+        padding: 8px;
+        border-radius: 8px;
+        border: 1px solid #222;
+        background: #0a0a0a;
+        color: #fff;
+      }
+      button {
+        padding: 8px 12px;
+        border-radius: 8px;
+        border: none;
+        background: var(--gold);
+        cursor: pointer;
+        color: #081010;
+        font-weight: 600;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: var(--card);
+        border-radius: 8px;
+        overflow: hidden;
+      }
+      th {
+        background: #111;
+        padding: 12px;
+        text-align: left;
+        color: var(--gold);
+      }
+      td {
+        padding: 10px;
+        border-top: 1px solid #111;
+      }
+      tr:hover td {
+        background: #0b0b0b;
+      }
+      .action-btn {
+        background: #de3d3d;
+        color: #fff;
+        border: none;
+        padding: 6px 8px;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+      .top-right {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+      .small {
+        font-size: 13px;
+        color: #a8a8a8;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div>
+        <h1>Smile & Glow — Admin Panel</h1>
+        <div class="small">Manage appointments</div>
+      </div>
+
+      <div class="top-right">
+        <div class="small" id="adminEmail"></div>
+        <button id="logoutBtn">Logout</button>
+      </div>
+    </header>
+
+    <div class="controls" style="margin-bottom: 12px">
+      <input id="searchInput" placeholder="Search name or phone" />
+      <select id="serviceFilter">
+        <option value="">All services</option>
+        <option>Dental</option>
+        <option>Skin</option>
+        <option>Hydra Facial</option>
+        <option>Laser</option>
+      </select>
+      <select id="sortOrder">
+        <option value="newest">Newest first</option>
+        <option value="oldest">Oldest first</option>
+      </select>
+      <button id="refreshBtn">Refresh</button>
+    </div>
+
+    <div id="loading" class="small">Loading appointments...</div>
+
+    <table id="appointmentsTable" style="display: none">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Date of Birth</th>
+          <th>Gender</th>
+          <th>Phone</th>
+          <th>Email</th>
+          <th>Address</th>
+          <th>Preferred Date</th>
+          <th>Alternate Date</th>
+          <th>Preferred Time</th>
+          <th>Alternate Time</th>
+          <th>Doctor</th>
+          <th>Reason</th>
+          <th>Created On</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody id="tableBody"></tbody>
+    </table>
+
+    <script>
+      const API_BASE = "https://smile-glow.onrender.com"; // set your backend URL
+      const token = localStorage.getItem("token");
+      if (!token) window.location.href = "admin-login.html";
+      document.getElementById("adminEmail").textContent =
+        localStorage.getItem("adminEmail") || "";
+
+      let appointments = [];
+
+      async function loadAppointments() {
+        try {
+          const res = await fetch(`${API_BASE}/api/admin/appointments`, {
+            headers: { Authorization: "Bearer " + token },
+          });
+          if (res.status === 403 || res.status === 401) {
+            alert("Session expired. Login again.");
+            logout();
+            return;
+          }
+          appointments = await res.json();
+          document.getElementById("loading").style.display = "none";
+          document.getElementById("appointmentsTable").style.display = "table";
+          renderTable();
+        } catch (err) {
+          document.getElementById("loading").textContent = "Error loading data";
+          console.error(err);
+        }
+      }
+
+      function renderTable() {
+        const tbody = document.getElementById("tableBody");
+        tbody.innerHTML = "";
+
+        const search = document
+          .getElementById("searchInput")
+          .value.trim()
+          .toLowerCase();
+        const filterService = document.getElementById("serviceFilter").value;
+        const sortOrder = document.getElementById("sortOrder").value;
+
+        let filtered = appointments.filter((a) => {
+          return (
+            a.name?.toLowerCase().includes(search) ||
+            (a.phone || "").includes(search)
+          );
+        });
+
+        if (filterService)
+          filtered = filtered.filter((a) => a.service === filterService);
+
+        filtered.sort((a, b) =>
+          sortOrder === "newest"
+            ? new Date(b.createdAt) - new Date(a.createdAt)
+            : new Date(a.createdAt) - new Date(b.createdAt)
+        );
+
+        filtered.forEach((app) => {
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+  <td>${app.name || ""}</td>
+  <td>${app.dob || ""}</td>
+  <td>${app.gender || ""}</td>
+  <td>${app.phone || ""}</td>
+  <td>${app.email || ""}</td>
+  <td>${app.address || ""}</td>
+
+  <td>${app.preferred_date || ""}</td>
+  <td>${app.alternate_date || ""}</td>
+
+  <td>${app.preferred_time || ""}</td>
+  <td>${app.alternate_time || ""}</td>
+
+  <td>${app.appointment_type || ""}</td>
+  <td>${app.reason || ""}</td>
+
+  <td>${new Date(app.createdAt).toLocaleString()}</td>
+
+  <td>
+    <button class="action-btn" data-id="${app._id}">Delete</button>
+  </td>
+`;
+
+          tbody.appendChild(tr);
+        });
+
+        // attach delete handlers
+        document.querySelectorAll(".action-btn").forEach((btn) => {
+          btn.onclick = () => deleteAppointment(btn.dataset.id);
+        });
+      }
+
+      async function deleteAppointment(id) {
+        if (!confirm("Delete this appointment?")) return;
+        try {
+          const res = await fetch(`${API_BASE}/api/admin/appointments/${id}`, {
+            method: "DELETE",
+            headers: { Authorization: "Bearer " + token },
+          });
+          if (res.ok) {
+            appointments = appointments.filter((a) => a._id !== id);
+            renderTable();
+          } else {
+            alert("Delete failed");
+          }
+        } catch (err) {
+          console.error(err);
+        }
+      }
+
+      function logout() {
+        localStorage.removeItem("token");
+        localStorage.removeItem("adminEmail");
+        window.location.href = "admin-login.html";
+      }
+
+      document.getElementById("logoutBtn").addEventListener("click", logout);
+      document
+        .getElementById("refreshBtn")
+        .addEventListener("click", loadAppointments);
+      document
+        .getElementById("searchInput")
+        .addEventListener("input", renderTable);
+      document
+        .getElementById("serviceFilter")
+        .addEventListener("change", renderTable);
+      document
+        .getElementById("sortOrder")
+        .addEventListener("change", renderTable);
+
+      loadAppointments();
+    </script>
+  </body>
+</html>
